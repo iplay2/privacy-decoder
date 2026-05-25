@@ -38,7 +38,7 @@ body {
 
 /* ── Header ──────────────────────────────────────────────────────────── */
 header {
-  background: var(--banner);
+  background: #002754;
   color: #ffffff;
   text-align: center;
   padding: 2.5rem 1rem 2rem;
@@ -84,9 +84,10 @@ main {
 .how-section {
   margin-bottom: 2rem;
   padding: 1.25rem 1.5rem;
-  background: var(--card);
-  border: 1.5px solid var(--border);
+  background: #4FA8F7;
+  border: 1.5px solid #265CB2;
   border-radius: var(--radius);
+  color: #002754;   /* dark text on light sky-blue background */
 }
 
 .info-heading {
@@ -94,19 +95,19 @@ main {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .07em;
-  color: var(--muted);
+  color: #0F2C65;
   margin-bottom: .5rem;
 }
 
 .info-text {
   font-size: .875rem;
-  color: var(--text);
+  color: #002754;
   line-height: 1.65;
 }
 
 .info-steps {
   font-size: .875rem;
-  color: var(--text);
+  color: #002754;
   line-height: 1.65;
   padding-left: 1.25rem;
 }
@@ -123,16 +124,16 @@ main {
 #url-input {
   flex: 1;
   padding: .75rem 1rem;
-  border: 2px solid var(--border);
+  border: 2px solid #265CB2;
   border-radius: var(--radius);
   font-size: 1rem;
-  color: var(--text);
-  background: var(--surface);
+  color: #002754;
+  background: #4FA8F7;
   outline: none;
   transition: border-color .15s;
 }
-#url-input::placeholder { color: var(--muted); }
-#url-input:focus { border-color: var(--action-h); }
+#url-input::placeholder { color: #3C64A2; }
+#url-input:focus { border-color: #002754; }
 
 #analyze-btn {
   padding: .75rem 1.5rem;
@@ -175,21 +176,21 @@ main {
 
 /* ── Drop zone ───────────────────────────────────────────────────────── */
 .drop-zone {
-  border: 2px dashed var(--border);
+  border: 2px dashed #265CB2;
   border-radius: var(--radius);
   padding: 2rem 1rem;
   text-align: center;
   cursor: pointer;
   transition: border-color .15s, background .15s;
-  background: var(--surface);
+  background: #4FA8F7;
 }
 .drop-zone.drag-over {
-  border-color: var(--action-h);
-  background: #0d2040;
+  border-color: #002754;
+  background: #c7e0ff;
 }
-.drop-zone-inner svg { color: var(--muted); margin-bottom: .5rem; }
-.drop-zone-inner p { margin: .25rem 0; color: var(--muted); font-size: .9rem; }
-.drop-hint { font-size: .8rem !important; color: var(--muted) !important; }
+.drop-zone-inner svg { color: #0F2C65; margin-bottom: .5rem; }
+.drop-zone-inner p { margin: .25rem 0; color: #002754; font-size: .9rem; }
+.drop-hint { font-size: .8rem !important; color: #3C64A2 !important; }
 
 .link-btn {
   background: none;
@@ -655,7 +656,7 @@ footer {
   font-size: .8rem;
   color: #c7e0ff;
   border-top: 1px solid var(--border);
-  background: var(--banner);
+  background: #002754;
 }
 
 /* ── Utilities ───────────────────────────────────────────────────────── */
