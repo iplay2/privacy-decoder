@@ -95,23 +95,28 @@ main {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .07em;
-  color: #0F2C65;
+  color: var(--muted);   /* white-ish on blue page background */
   margin-bottom: .5rem;
 }
 
 .info-text {
   font-size: .875rem;
-  color: #002754;
+  color: var(--text);    /* white on blue page background */
   line-height: 1.65;
 }
 
 .info-steps {
   font-size: .875rem;
-  color: #002754;
+  color: var(--text);    /* white on blue page background */
   line-height: 1.65;
   padding-left: 1.25rem;
 }
 .info-steps li { margin-bottom: .3rem; }
+
+/* Inside the light-sky-blue How to Use card, override to dark navy text */
+.how-section .info-heading { color: #0F2C65; }
+.how-section .info-text    { color: #002754; }
+.how-section .info-steps   { color: #002754; }
 
 /* ── Input form ──────────────────────────────────────────────────────── */
 .input-section { margin-bottom: 2rem; }
