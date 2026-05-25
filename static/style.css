@@ -665,7 +665,12 @@ main {
   white-space: nowrap;
 }
 
-.dc-table tbody tr:nth-child(even) { background: var(--bg); }
+/* Row background matches the Can Do? rating */
+.dc-row-yes      { background: #FCECEA; }
+.dc-row-likely   { background: #FEF6E5; }
+.dc-row-unlikely { background: #E8F1F9; }
+.dc-row-no       { background: #E8F5EC; }
+.dc-row-unknown  { background: var(--bg); }
 
 .dc-table td {
   padding: .45rem .5rem;

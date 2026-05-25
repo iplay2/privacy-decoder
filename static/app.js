@@ -250,9 +250,14 @@ function buildDataCollectionMatrix(answers) {
       <th class="dc-basis">Basis</th>
     </tr></thead>`;
 
+    const DC_ROW_CLASS = {
+      Yes:"dc-row-yes", Likely:"dc-row-likely",
+      Unlikely:"dc-row-unlikely", No:"dc-row-no", Unknown:"dc-row-unknown"
+    };
     const tbody = document.createElement("tbody");
     for (const a of items) {
       const tr = document.createElement("tr");
+      tr.className = DC_ROW_CLASS[a.can_do] ?? "dc-row-unknown";
       tr.innerHTML = `
         <td class="dc-question">${a.question}</td>
         <td class="dc-rating">${dcBadge(a.can_do)}</td>
