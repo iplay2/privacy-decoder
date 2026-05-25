@@ -13,17 +13,17 @@
   --banner:  #3C64A2;   /* Banner Color — header & footer                  */
   --radius:  10px;
 
-  /* ── Risk colours ────────────────────────────────────────────────────── */
-  --low:     #4ade80;   --low-bg:  #052e16;   /* bright green              */
-  --med:     #fbbf24;   --med-bg:  #3a1d00;   /* amber-gold                */
-  --high:    #f87171;   --high-bg: #3a0808;   /* coral red                 */
+  /* ── Risk colours — blue-shifted tints ──────────────────────────────── */
+  --low:     #34d399;   --low-bg:  #0a3323;   /* teal-green, blue-tinted   */
+  --med:     #fcd34d;   --med-bg:  #332b00;   /* cool gold, less orange    */
+  --high:    #fca5a5;   --high-bg: #3a0a1a;   /* coral, crimson-navy shift */
 
-  /* ── Grade palette  A & B = greens, C–F warm → red ─────────────────── */
-  --grade-a:    #4ade80; --grade-a-bg: #052e16;   /* bright green          */
-  --grade-b:    #86efac; --grade-b-bg: #064e3b;   /* lighter green         */
-  --grade-c:    #fbbf24; --grade-c-bg: #3a1d00;   /* amber-gold            */
-  --grade-d:    #fb923c; --grade-d-bg: #3a1200;   /* warm orange           */
-  --grade-f:    #f87171; --grade-f-bg: #3a0808;   /* coral red             */
+  /* ── Grade palette — blue-shifted, same depth as blue cards ─────────── */
+  --grade-a:    #34d399; --grade-a-bg: #0a3323;   /* teal-green            */
+  --grade-b:    #6ee7b7; --grade-b-bg: #0e3d2e;   /* mint green            */
+  --grade-c:    #fcd34d; --grade-c-bg: #332b00;   /* cool gold             */
+  --grade-d:    #fdba74; --grade-d-bg: #3d1f00;   /* soft peach-orange     */
+  --grade-f:    #fca5a5; --grade-f-bg: #3a0a1a;   /* pink-coral, navy tint */
 }
 
 body {
@@ -656,10 +656,10 @@ main {
   font-weight: 700;
   white-space: nowrap;
 }
-.dc-yes      { background: #3a0808; color: #fca5a5; }
-.dc-likely   { background: #3a1500; color: #fdba74; }
-.dc-unlikely { background: #3a2d00; color: #fde68a; }
-.dc-no       { background: #052e16; color: #86efac; }
+.dc-yes      { background: #3a0a1a; color: #fca5a5; }
+.dc-likely   { background: #3d1f00; color: #fdba74; }
+.dc-unlikely { background: #332b00; color: #fcd34d; }
+.dc-no       { background: #0a3323; color: #6ee7b7; }
 .dc-unknown  { background: var(--surface); color: var(--muted); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
