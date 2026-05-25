@@ -66,6 +66,18 @@ main {
   margin-bottom: 1.25rem;
 }
 
+/* ── Section divider heading ─────────────────────────────────────────── */
+.section-heading {
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--muted);
+  border-top: 1.5px solid var(--border);
+  padding-top: 1.25rem;
+  margin-bottom: 1rem;
+}
+
 /* ── How to use section (card) ───────────────────────────────────────── */
 .how-section {
   margin-bottom: 2rem;
