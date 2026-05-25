@@ -126,7 +126,9 @@ main {
   font-size: .875rem;
   color: var(--text-secondary);
   line-height: 1.65;
+  margin-bottom: .65rem;
 }
+.info-text:last-child { margin-bottom: 0; }
 
 .info-steps {
   font-size: .875rem;
