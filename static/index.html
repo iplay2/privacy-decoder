@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Privacy Defender</title>
+  <link rel="stylesheet" href="/privacydecoder/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Your Privacy Defender</h1>
+    <p class="tagline">What you should know when you say I Agree</p>
+  </header>
+
+  <main>
+
+    <!-- ── Why this website exists (no box) ────────────────────────────── -->
+    <section class="why-section">
+      <h3 class="info-heading">Why This Website Exists</h3>
+      <p class="info-text">Privacy policies are written by lawyers, for companies — not for you. They average 2,500 words and are intentionally vague. By the time most people finish reading one, they've already clicked "I Agree." We analyze them in seconds and tell you exactly what you've signed away, in plain English.</p>
+    </section>
+
+    <!-- ── How to use (card) ─────────────────────────────────────────────── -->
+    <section class="how-section">
+      <h3 class="info-heading">How to Use</h3>
+      <ol class="info-steps">
+        <li>Paste a <strong>URL</strong> to any Privacy Policy or EULA — or save one as a PDF and <strong>upload</strong> it</li>
+        <li>We score it across 12 privacy risk categories using a weighted formula</li>
+        <li>Read your plain-English report — no legal degree required</li>
+      </ol>
+    </section>
+
+    <!-- ── Input ─────────────────────────────────────────────────────────── -->
+    <section class="input-section">
+      <div class="input-tabs">
+        <button class="tab-btn active" id="tab-url">Paste URL</button>
+        <button class="tab-btn" id="tab-pdf">Upload PDF</button>
+      </div>
+
+      <form id="analyze-form" class="tab-panel">
+        <input
+          type="url"
+          id="url-input"
+          placeholder="Paste a Privacy Policy or EULA URL…"
+          autocomplete="off"
+        />
+        <button type="submit" id="analyze-btn">Analyze</button>
+      </form>
+
+      <div id="upload-panel" class="tab-panel hidden">
+        <div id="drop-zone" class="drop-zone">
+          <input type="file" id="pdf-input" accept=".pdf,application/pdf" class="hidden" />
+          <div class="drop-zone-inner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <p id="drop-label">Drop a PDF here, or <button type="button" id="browse-btn" class="link-btn">browse</button></p>
+            <p class="drop-hint">Save any Privacy Policy as a PDF from your browser and upload it here</p>
+          </div>
+        </div>
+        <div id="file-chosen" class="file-chosen hidden">
+          <span id="file-name"></span>
+          <button type="button" id="clear-file-btn" class="link-btn">✕ Remove</button>
+        </div>
+        <button type="button" id="upload-btn" class="analyze-btn-full hidden">Analyze PDF</button>
+      </div>
+    </section>
+
+    <!-- ── Popular matrix ───────────────────────────────────────────────── -->
+    <section id="popular-section" class="popular-section hidden">
+      <h2>Most Analyzed Policies <span class="popular-subtitle">ranked worst → best</span></h2>
+      <div id="popular-list" class="popular-list"></div>
+      <div id="policy-detail" class="policy-detail hidden"></div>
+    </section>
+
+    <!-- ── Loading / Error ──────────────────────────────────────────────── -->
+    <section id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Reading the fine print so you don't have to…</p>
+    </section>
+
+    <section id="error-banner" class="error-banner hidden">
+      <p id="error-message"></p>
+    </section>
+
+    <!-- ── Results ──────────────────────────────────────────────────────── -->
+    <section id="results" class="results hidden">
+      <div class="results-header">
+        <div class="company-info">
+          <h2 id="company-name"></h2>
+          <a id="policy-url" href="#" target="_blank" rel="noopener noreferrer" class="policy-link"></a>
+          <p class="meta">
+            <span id="doc-date-row" class="hidden">Document dated <strong id="doc-date"></strong> &nbsp;·&nbsp; </span>
+            Analyzed <span id="analyzed-at"></span>
+            &nbsp;·&nbsp; Version <span id="version-num"></span>
+            <span id="cached-badge" class="badge badge-cached hidden">Cached</span>
+          </p>
+        </div>
+        <div class="overall-risk">
+          <div class="score-block">
+            <div id="grade-badge" class="grade-badge"></div>
+            <div id="privacy-score" class="privacy-score-num"></div>
+            <div id="risk-label" class="privacy-score-label"></div>
+          </div>
+          <p id="overall-summary" class="overall-summary"></p>
+        </div>
+      </div>
+
+      <div id="changes-banner" class="changes-banner hidden">
+        <strong>Policy updated since last analysis.</strong> Changed categories are highlighted below.
+      </div>
+
+      <div id="categories" class="categories"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Your Privacy Defender analyzes policies in plain English. We do not track you or store anything about your session.</p>
+  </footer>
+
+  <script src="/privacydecoder/static/app.js"></script>
+</body>
+</html>
