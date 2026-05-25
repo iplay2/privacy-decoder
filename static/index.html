@@ -30,6 +30,46 @@
       <div id="policy-detail" class="policy-detail hidden"></div>
     </section>
 
+    <!-- ── Loading / Error ──────────────────────────────────────────────── -->
+    <section id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Reading the fine print so you don't have to…</p>
+    </section>
+
+    <section id="error-banner" class="error-banner hidden">
+      <p id="error-message"></p>
+    </section>
+
+    <!-- ── Results ──────────────────────────────────────────────────────── -->
+    <section id="results" class="results hidden">
+      <div class="results-header">
+        <div class="company-info">
+          <h2 id="company-name"></h2>
+          <a id="policy-url" href="#" target="_blank" rel="noopener noreferrer" class="policy-link"></a>
+          <p class="meta">
+            <span id="doc-date-row" class="hidden">Document dated <strong id="doc-date"></strong> &nbsp;·&nbsp; </span>
+            Analyzed <span id="analyzed-at"></span>
+            &nbsp;·&nbsp; Version <span id="version-num"></span>
+            <span id="cached-badge" class="badge badge-cached hidden">Cached</span>
+          </p>
+        </div>
+        <div class="overall-risk">
+          <div class="score-block">
+            <div id="grade-badge" class="grade-badge"></div>
+            <div id="privacy-score" class="privacy-score-num"></div>
+            <div id="risk-label" class="privacy-score-label"></div>
+          </div>
+          <p id="overall-summary" class="overall-summary"></p>
+        </div>
+      </div>
+
+      <div id="changes-banner" class="changes-banner hidden">
+        <strong>Policy updated since last analysis.</strong> Changed categories are highlighted below.
+      </div>
+
+      <div id="categories" class="categories"></div>
+    </section>
+
     <!-- ── Add a new company policy ────────────────────────────────────── -->
     <h2 class="section-heading">Add a New Company Policy</h2>
 
@@ -77,45 +117,6 @@
       </div>
     </section>
 
-    <!-- ── Loading / Error ──────────────────────────────────────────────── -->
-    <section id="loading" class="loading hidden">
-      <div class="spinner"></div>
-      <p>Reading the fine print so you don't have to…</p>
-    </section>
-
-    <section id="error-banner" class="error-banner hidden">
-      <p id="error-message"></p>
-    </section>
-
-    <!-- ── Results ──────────────────────────────────────────────────────── -->
-    <section id="results" class="results hidden">
-      <div class="results-header">
-        <div class="company-info">
-          <h2 id="company-name"></h2>
-          <a id="policy-url" href="#" target="_blank" rel="noopener noreferrer" class="policy-link"></a>
-          <p class="meta">
-            <span id="doc-date-row" class="hidden">Document dated <strong id="doc-date"></strong> &nbsp;·&nbsp; </span>
-            Analyzed <span id="analyzed-at"></span>
-            &nbsp;·&nbsp; Version <span id="version-num"></span>
-            <span id="cached-badge" class="badge badge-cached hidden">Cached</span>
-          </p>
-        </div>
-        <div class="overall-risk">
-          <div class="score-block">
-            <div id="grade-badge" class="grade-badge"></div>
-            <div id="privacy-score" class="privacy-score-num"></div>
-            <div id="risk-label" class="privacy-score-label"></div>
-          </div>
-          <p id="overall-summary" class="overall-summary"></p>
-        </div>
-      </div>
-
-      <div id="changes-banner" class="changes-banner hidden">
-        <strong>Policy updated since last analysis.</strong> Changed categories are highlighted below.
-      </div>
-
-      <div id="categories" class="categories"></div>
-    </section>
   </main>
 
   <footer>

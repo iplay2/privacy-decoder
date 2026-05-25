@@ -561,6 +561,7 @@ function showLoading(isPdf = false) {
     ? "Extracting text from your PDF…"
     : "Reading the fine print so you don't have to…";
   loading.classList.remove("hidden");
+  loading.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function showError(msg) {
