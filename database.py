@@ -3,7 +3,7 @@ import hashlib
 import aiosqlite
 from datetime import datetime, timezone
 from typing import Optional
-from models import AnalysisResult, CategoryResult, CategoryChange
+from models import AnalysisResult, CategoryResult, CategoryChange, DataCollectionAnswer
 from scoring import compute_privacy_score
 
 DB_PATH = "privacy_decoder.db"
@@ -65,6 +65,8 @@ MIGRATIONS = [
     "ALTER TABLE analyses ADD COLUMN grade TEXT",
     "ALTER TABLE analysis_versions ADD COLUMN privacy_score INTEGER",
     "ALTER TABLE analysis_versions ADD COLUMN grade TEXT",
+    "ALTER TABLE analyses ADD COLUMN data_collection_json TEXT",
+    "ALTER TABLE analysis_versions ADD COLUMN data_collection_json TEXT",
 ]
 
 
@@ -105,7 +107,8 @@ def _hash_document(text: str) -> str:
 def _row_to_result(row, from_cache=True) -> AnalysisResult:
     # columns: id=0, url=1, company=2, overall_risk=3, overall_summary=4,
     #          categories_json=5, doc_hash=6, analyzed_at=7, version=8,
-    #          document_date=9, is_pdf=10, privacy_score=11, grade=12
+    #          document_date=9, is_pdf=10, privacy_score=11, grade=12,
+    #          data_collection_json=13
     url             = row[1]
     company         = row[2]
     overall_risk    = row[3]
@@ -117,10 +120,18 @@ def _row_to_result(row, from_cache=True) -> AnalysisResult:
     is_pdf          = bool(row[10]) if len(row) > 10 else False
     privacy_score   = row[11] if len(row) > 11 else None
     grade           = row[12] if len(row) > 12 else None
+    dc_json         = row[13] if len(row) > 13 else None
 
     # Back-fill score for rows written before scoring was introduced
     if privacy_score is None:
         privacy_score, grade = compute_privacy_score(categories)
+
+    dc_matrix = None
+    if dc_json:
+        try:
+            dc_matrix = [DataCollectionAnswer(**a) for a in json.loads(dc_json)]
+        except Exception:
+            pass
 
     return AnalysisResult(
         company=company,
@@ -136,6 +147,7 @@ def _row_to_result(row, from_cache=True) -> AnalysisResult:
         cached_at=datetime.fromisoformat(analyzed_at),
         version=version,
         is_pdf=is_pdf,
+        data_collection_matrix=dc_matrix,
     )
 
 
@@ -195,6 +207,10 @@ async def save_analysis(url: str, result: AnalysisResult, doc_hash: str,
     categories_json = json.dumps([c.model_dump() for c in result.categories])
     analyzed_at = result.analyzed_at.isoformat()
     doc_date = result.document_date
+    dc_json = (
+        json.dumps([a.model_dump() for a in result.data_collection_matrix])
+        if result.data_collection_matrix else None
+    )
 
     # Ensure score is computed (analyzer already sets it; this is a safety net)
     if result.privacy_score is None:
@@ -210,11 +226,11 @@ async def save_analysis(url: str, result: AnalysisResult, doc_hash: str,
                 """INSERT INTO analyses
                    (url, company, overall_risk, overall_summary, categories_json,
                     doc_hash, analyzed_at, version, document_date, is_pdf,
-                    privacy_score, grade)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    privacy_score, grade, data_collection_json)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (url, result.company, result.overall_risk, result.overall_summary,
                  categories_json, doc_hash, analyzed_at, version, doc_date, int(is_pdf),
-                 result.privacy_score, result.grade),
+                 result.privacy_score, result.grade, dc_json),
             )
         else:
             version = row[0] + 1
@@ -222,7 +238,8 @@ async def save_analysis(url: str, result: AnalysisResult, doc_hash: str,
                 """INSERT INTO analysis_versions
                    SELECT NULL, url, company, overall_risk, overall_summary,
                           categories_json, doc_hash, analyzed_at, version,
-                          document_date, is_pdf, privacy_score, grade
+                          document_date, is_pdf, privacy_score, grade,
+                          data_collection_json
                    FROM analyses WHERE url = ?""",
                 (url,),
             )
@@ -230,11 +247,11 @@ async def save_analysis(url: str, result: AnalysisResult, doc_hash: str,
                 """UPDATE analyses
                    SET company=?, overall_risk=?, overall_summary=?, categories_json=?,
                        doc_hash=?, analyzed_at=?, version=?, document_date=?, is_pdf=?,
-                       privacy_score=?, grade=?
+                       privacy_score=?, grade=?, data_collection_json=?
                    WHERE url=?""",
                 (result.company, result.overall_risk, result.overall_summary,
                  categories_json, doc_hash, analyzed_at, version, doc_date,
-                 int(is_pdf), result.privacy_score, result.grade, url),
+                 int(is_pdf), result.privacy_score, result.grade, dc_json, url),
             )
 
         await db.commit()

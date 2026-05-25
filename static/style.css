@@ -560,6 +560,91 @@ main {
 
 .detail-view-btn { margin-top: 0; }
 
+/* ── Data Collection Matrix ──────────────────────────────────────────── */
+.dc-matrix {
+  margin-top: 1.25rem;
+  border-top: 1.5px solid var(--border);
+  padding-top: 1rem;
+}
+
+.dc-matrix-heading {
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-bottom: .2rem;
+}
+
+.dc-matrix-subtext {
+  font-size: .78rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.dc-group {
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+.dc-group-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text);
+  padding: .3rem 0;
+  margin-bottom: .35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dc-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: .76rem;
+}
+
+.dc-table thead th {
+  text-align: left;
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  padding: .3rem .5rem;
+  background: #f8fafc;
+  border-bottom: 1.5px solid var(--border);
+  white-space: nowrap;
+}
+
+.dc-table tbody tr:nth-child(even) { background: #f8fafc; }
+
+.dc-table td {
+  padding: .45rem .5rem;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f0;
+  line-height: 1.4;
+}
+
+.dc-question { width: 42%; color: var(--text); }
+.dc-rating   { width: 13%; text-align: center; }
+.dc-basis    { width: 32%; color: var(--muted); font-style: italic; font-size: .7rem; }
+
+/* Rating badges */
+.dc-badge {
+  display: inline-block;
+  padding: .15rem .4rem;
+  border-radius: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.dc-yes      { background: #fee2e2; color: #b91c1c; }
+.dc-likely   { background: #ffedd5; color: #c2410c; }
+.dc-unlikely { background: #fef9c3; color: #854d0e; }
+.dc-no       { background: #dcfce7; color: #15803d; }
+.dc-unknown  { background: #f1f5f9; color: #64748b; }
+
 /* ── Footer ──────────────────────────────────────────────────────────── */
 footer {
   text-align: center;

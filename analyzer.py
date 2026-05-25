@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timezone
 
 import anthropic
-from models import AnalysisResult, CategoryResult
+from models import AnalysisResult, CategoryResult, DataCollectionAnswer
 from scoring import compute_privacy_score
 
 _client: anthropic.Anthropic | None = None
@@ -82,6 +82,137 @@ ANALYSIS_TOOL = {
     },
 }
 
+# ── Data Collection matrix ────────────────────────────────────────────────────
+
+DC_QUESTIONS = [
+    #  id   category         question
+    (  1, "Photos",        "Can they access and view all my photos?"),
+    (  2, "Photos",        "Can they identify people in my photos?"),
+    (  3, "Photos",        "Can they identify my pets in my photos?"),
+    (  4, "Photos",        "Can they read GPS/location metadata embedded in my photos?"),
+    (  5, "Photos",        "Can they identify other people's phones or devices visible in my photos?"),
+    (  6, "Photos",        "Can they use my photos to train AI models?"),
+    (  7, "Video",         "Can they access and watch my videos?"),
+    (  8, "Video",         "Can they analyze the content of my videos?"),
+    (  9, "Video",         "Can they identify people who appear in my videos?"),
+    ( 10, "Video",         "Can they access my camera in real time without me actively recording?"),
+    ( 11, "Audio",         "Can they listen through my microphone?"),
+    ( 12, "Audio",         "Can they record my voice or conversations?"),
+    ( 13, "Audio",         "Can they identify me by my voice (voiceprint)?"),
+    ( 14, "Audio",         "Can they identify other people speaking near me?"),
+    ( 15, "Audio",         "Can they capture ambient sound in my environment?"),
+    ( 16, "Location",      "Can they see my current location?"),
+    ( 17, "Location",      "Can they track my location history and movement patterns?"),
+    ( 18, "Location",      "Can they infer where I live or work from my patterns?"),
+    ( 19, "Location",      "Can they see the location metadata of photos I take?"),
+    ( 20, "Social Graph",  "Can they build a profile of my friends/family who don't have an account?"),
+    ( 21, "Social Graph",  "Can they map who I communicate with and how often?"),
+    ( 22, "Social Graph",  "Can they detect other phones near me (Bluetooth/WiFi probing)?"),
+    ( 23, "Social Graph",  "Can they see my contacts list?"),
+    ( 24, "Social Graph",  "Can they see my call or message logs?"),
+    ( 25, "Behavior",      "Can they track what I look at and for how long?"),
+    ( 26, "Behavior",      "Can they infer my mood or emotional state?"),
+    ( 27, "Behavior",      "Can they infer my political or religious beliefs?"),
+    ( 28, "Behavior",      "Can they infer my sexual orientation or identity?"),
+    ( 29, "Behavior",      "Can they build a behavioral profile to predict my future actions?"),
+    ( 30, "Health",        "Can they collect health or fitness data?"),
+    ( 31, "Health",        "Can they infer health conditions from my behavior or searches?"),
+    ( 32, "Health",        "Can they collect biometric data (face, fingerprint, iris)?"),
+    ( 33, "Financial",     "Can they see my purchase history?"),
+    ( 34, "Financial",     "Can they infer my income or financial situation?"),
+    ( 35, "Financial",     "Can they share or sell financial inferences to third parties?"),
+    ( 36, "Device",        "Can they see what other apps I have installed?"),
+    ( 37, "Device",        "Can they access my clipboard?"),
+    ( 38, "Device",        "Can they see my browsing history across other sites?"),
+    ( 39, "Device",        "Can they identify other devices on my home network?"),
+]
+
+DC_RATINGS = ["Yes", "No", "Likely", "Unlikely", "Unknown"]
+
+DC_SYSTEM = """You are a privacy rights expert. You will receive a privacy policy and a numbered list of questions about what the company can collect and do with user data.
+
+For EACH question answer two things:
+1. can_do  — Can the company perform this action based on the policy?
+2. third_party — Can they share this specific data or capability with third parties?
+
+Rating scale (use EXACTLY one of these strings):
+- "Yes"      — The policy explicitly permits this
+- "No"       — The policy explicitly prohibits or opts the user out of this
+- "Likely"   — The policy uses vague language that almost certainly permits this
+- "Unlikely" — The policy implies this is not done but does not explicitly forbid it
+- "Unknown"  — The policy is completely silent on this point
+
+If the policy is silent, lean "Likely" for common industry practices, "Unknown" for niche capabilities.
+Never assume good faith — when ambiguous, flag it.
+
+For basis: one concise sentence citing the relevant clause, or "Not addressed in policy." """
+
+DC_TOOL = {
+    "name": "submit_data_collection_matrix",
+    "description": "Submit answers to every data collection question.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "answers": {
+                "type": "array",
+                "description": "One entry per question, in order 1–39.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id":          {"type": "integer"},
+                        "can_do":      {"type": "string", "enum": DC_RATINGS},
+                        "third_party": {"type": "string", "enum": DC_RATINGS},
+                        "basis":       {"type": "string"},
+                    },
+                    "required": ["id", "can_do", "third_party", "basis"],
+                },
+                "minItems": 39,
+                "maxItems": 39,
+            },
+        },
+        "required": ["answers"],
+    },
+}
+
+
+def _analyze_data_collection(document_text: str) -> list[DataCollectionAnswer]:
+    """Run the 39-question matrix against the document. Returns [] on failure."""
+    q_block = "\n".join(f"{q[0]}. [{q[1]}] {q[2]}" for q in DC_QUESTIONS)
+    user_msg = (
+        f"Answer every question about this privacy policy:\n\n{q_block}\n\n"
+        f"Policy text:\n---\n{document_text}\n---"
+    )
+    try:
+        resp = _get_client().messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=8192,
+            system=[{"type": "text", "text": DC_SYSTEM, "cache_control": {"type": "ephemeral"}}],
+            tools=[DC_TOOL],
+            tool_choice={"type": "tool", "name": "submit_data_collection_matrix"},
+            messages=[{
+                "role": "user",
+                "content": [{"type": "text", "text": user_msg, "cache_control": {"type": "ephemeral"}}],
+            }],
+        )
+        block = next(b for b in resp.content if b.type == "tool_use")
+        q_map = {q[0]: q for q in DC_QUESTIONS}
+        return [
+            DataCollectionAnswer(
+                id=a["id"],
+                category=q_map[a["id"]][1] if a["id"] in q_map else "Other",
+                question=q_map[a["id"]][2] if a["id"] in q_map else f"Question {a['id']}",
+                can_do=a["can_do"],
+                third_party=a["third_party"],
+                basis=a.get("basis", "Not addressed in policy."),
+            )
+            for a in block.input["answers"]
+        ]
+    except Exception:
+        return []
+
+
+# ── Main analysis ──────────────────────────────────────────────────────────────
+
 USER_PROMPT_TEMPLATE = """Analyze the following Privacy Policy / EULA document.
 
 Evaluate ALL of these categories in this exact order:
@@ -147,6 +278,9 @@ async def analyze_document(url: str, document_text: str) -> AnalysisResult:
     doc_date = data.get("document_date", "").strip() or None
     privacy_score, grade = compute_privacy_score(categories)
 
+    # Second pass: data-collection matrix (uses cached document tokens)
+    dc_matrix = _analyze_data_collection(truncated)
+
     return AnalysisResult(
         company=data["company"],
         url=url,
@@ -157,4 +291,5 @@ async def analyze_document(url: str, document_text: str) -> AnalysisResult:
         categories=categories,
         privacy_score=privacy_score,
         grade=grade,
+        data_collection_matrix=dc_matrix or None,
     )

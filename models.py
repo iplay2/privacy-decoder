@@ -7,6 +7,15 @@ class AnalyzeRequest(BaseModel):
     url: str
 
 
+class DataCollectionAnswer(BaseModel):
+    id: int
+    category: str
+    question: str
+    can_do: str        # Yes | No | Likely | Unlikely | Unknown
+    third_party: str   # Yes | No | Likely | Unlikely | Unknown
+    basis: str
+
+
 class CategoryResult(BaseModel):
     name: str
     risk: str  # "low" | "medium" | "high"
@@ -38,6 +47,7 @@ class AnalysisResult(BaseModel):
     version: Optional[int] = None
     changes_from_previous: Optional[list[CategoryChange]] = None
     is_pdf: bool = False
+    data_collection_matrix: Optional[list[DataCollectionAnswer]] = None
 
 
 class PopularEntry(BaseModel):

@@ -183,6 +183,91 @@ function toggleCellDetail(cellEl, entry) {
     });
 }
 
+// ── Data Collection Matrix ────────────────────────────────────────────────
+const DC_CATEGORY_ICONS = {
+  "Photos":       "📷",
+  "Video":        "🎥",
+  "Audio":        "🎙️",
+  "Location":     "📍",
+  "Social Graph": "👥",
+  "Behavior":     "🧠",
+  "Health":       "🏥",
+  "Financial":    "💳",
+  "Device":       "📱",
+};
+
+// Preserve insertion order from the questions list
+const DC_CATEGORY_ORDER = [
+  "Photos","Video","Audio","Location","Social Graph",
+  "Behavior","Health","Financial","Device"
+];
+
+function dcBadge(rating) {
+  const cls = { Yes:"dc-yes", No:"dc-no", Likely:"dc-likely",
+                Unlikely:"dc-unlikely", Unknown:"dc-unknown" }[rating] ?? "dc-unknown";
+  return `<span class="dc-badge ${cls}">${rating}</span>`;
+}
+
+function buildDataCollectionMatrix(answers) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "dc-matrix";
+
+  wrapper.innerHTML = `
+    <div class="dc-matrix-heading">Detailed Data Collection Analysis</div>
+    <p class="dc-matrix-subtext">What this company can collect and share about you, based on their stated policy</p>`;
+
+  // Group by category, preserving order
+  const groups = {};
+  for (const a of answers) {
+    if (!groups[a.category]) groups[a.category] = [];
+    groups[a.category].push(a);
+  }
+
+  const orderedKeys = DC_CATEGORY_ORDER.filter(k => groups[k]);
+  // Append any unexpected categories at the end
+  for (const k of Object.keys(groups)) {
+    if (!orderedKeys.includes(k)) orderedKeys.push(k);
+  }
+
+  for (const cat of orderedKeys) {
+    const items = groups[cat];
+    const icon  = DC_CATEGORY_ICONS[cat] ?? "";
+
+    const groupEl = document.createElement("div");
+    groupEl.className = "dc-group";
+
+    const label = document.createElement("div");
+    label.className = "dc-group-label";
+    label.textContent = `${icon} ${cat}`;
+    groupEl.appendChild(label);
+
+    const table = document.createElement("table");
+    table.className = "dc-table";
+    table.innerHTML = `<thead><tr>
+      <th class="dc-question">Question</th>
+      <th class="dc-rating">Can do?</th>
+      <th class="dc-rating">3rd Parties?</th>
+      <th class="dc-basis">Basis</th>
+    </tr></thead>`;
+
+    const tbody = document.createElement("tbody");
+    for (const a of items) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="dc-question">${a.question}</td>
+        <td class="dc-rating">${dcBadge(a.can_do)}</td>
+        <td class="dc-rating">${dcBadge(a.third_party)}</td>
+        <td class="dc-basis">${a.basis}</td>`;
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    groupEl.appendChild(table);
+    wrapper.appendChild(groupEl);
+  }
+
+  return wrapper;
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────
 function getDomain(url) {
   try { return new URL(url).hostname; }
@@ -395,6 +480,11 @@ function renderResults(data, isPdf = false) {
 
       body.appendChild(toggle);
       body.appendChild(quoteBlock);
+    }
+
+    // Data Collection gets the full 39-question matrix
+    if (cat.name === "Data Collection" && data.data_collection_matrix?.length) {
+      body.appendChild(buildDataCollectionMatrix(data.data_collection_matrix));
     }
 
     card.appendChild(body);
