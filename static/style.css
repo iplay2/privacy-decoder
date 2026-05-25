@@ -41,7 +41,7 @@ header {
   background: #002754;
   color: #ffffff;
   text-align: center;
-  padding: 2.5rem 1rem 2rem;
+  padding: 1.5rem 1rem 1.25rem;
 }
 header h1 {
   font-size: 2rem;
@@ -52,6 +52,7 @@ header h1 {
   margin-top: .4rem;
   color: #c7e0ff;
   font-size: .95rem;
+  font-style: italic;
 }
 
 /* ── Main ────────────────────────────────────────────────────────────── */
@@ -70,11 +71,11 @@ main {
 
 /* ── Section divider heading ─────────────────────────────────────────── */
 .section-heading {
-  font-size: .7rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--muted);
+  letter-spacing: .05em;
+  color: #ffffff;
   border-top: 1.5px solid var(--border);
   padding-top: 1.25rem;
   margin-bottom: 1rem;
@@ -84,10 +85,10 @@ main {
 .how-section {
   margin-bottom: 2rem;
   padding: 1.25rem 1.5rem;
-  background: #4FA8F7;
+  background: #ffffff;
   border: 1.5px solid #265CB2;
   border-radius: var(--radius);
-  color: #002754;   /* dark text on light sky-blue background */
+  color: #002754;
 }
 
 .info-heading {
@@ -113,8 +114,15 @@ main {
 }
 .info-steps li { margin-bottom: .3rem; }
 
-/* Inside the light-sky-blue How to Use card, override to dark navy text */
-.how-section .info-heading { color: #0F2C65; }
+/* Why This Website Exists heading — white, same size as popular-section h2 */
+.why-section .info-heading {
+  color: #ffffff;
+  font-size: 1rem;
+  letter-spacing: .05em;
+}
+
+/* Inside the white How to Use card, override to dark navy text */
+.how-section .info-heading { color: #0F2C65; font-size: 1rem; letter-spacing: .05em; }
 .how-section .info-text    { color: #002754; }
 .how-section .info-steps   { color: #002754; }
 
@@ -133,7 +141,7 @@ main {
   border-radius: var(--radius);
   font-size: 1rem;
   color: #002754;
-  background: #4FA8F7;
+  background: #ffffff;
   outline: none;
   transition: border-color .15s;
 }
@@ -187,7 +195,7 @@ main {
   text-align: center;
   cursor: pointer;
   transition: border-color .15s, background .15s;
-  background: #4FA8F7;
+  background: #ffffff;
 }
 .drop-zone.drag-over {
   border-color: #002754;
@@ -292,7 +300,7 @@ main {
 .policy-cell.grade-d { background: var(--grade-d-bg); color: var(--grade-d); }
 .policy-cell.grade-f { background: var(--grade-f-bg); color: var(--grade-f); }
 
-.cell-name  { font-size: .72rem; font-weight: 700; line-height: 1.2; }
+.cell-name  { font-size: .72rem; font-weight: 700; line-height: 1.2; color: #ffffff; }
 .cell-grade { font-size: 1.75rem; font-weight: 900; line-height: 1; }
 .cell-score { font-size: .62rem; font-weight: 600; opacity: .75; }
 
@@ -662,6 +670,16 @@ footer {
   color: #c7e0ff;
   border-top: 1px solid var(--border);
   background: #002754;
+}
+.footer-disclaimer {
+  margin-top: .6rem;
+  font-size: .72rem;
+  color: #7ea8cc;
+  font-style: italic;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
 }
 
 /* ── Utilities ───────────────────────────────────────────────────────── */
