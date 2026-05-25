@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 
 import anthropic
 from models import AnalysisResult, CategoryResult, DataCollectionAnswer
-from scoring import compute_privacy_score
+from scoring import compute_privacy_score, compute_dc_risk
 
 _client: anthropic.Anthropic | None = None
 
@@ -276,10 +276,27 @@ async def analyze_document(url: str, document_text: str) -> AnalysisResult:
     ]
 
     doc_date = data.get("document_date", "").strip() or None
-    privacy_score, grade = compute_privacy_score(categories)
 
     # Second pass: data-collection matrix (uses cached document tokens)
     dc_matrix = _analyze_data_collection(truncated)
+
+    # Override the Data Collection category risk with the matrix-computed score.
+    # This replaces Claude's single broad judgment with a precise point-weighted
+    # model that accounts for collection breadth, data sensitivity, and —
+    # critically — third-party sharing (weighted 4× heavier than collection alone).
+    dc_risk = compute_dc_risk(dc_matrix)
+    if dc_risk:
+        categories = [
+            CategoryResult(
+                name=cat.name,
+                risk=dc_risk if cat.name == "Data Collection" else cat.risk,
+                summary=cat.summary,
+                quote=cat.quote,
+            )
+            for cat in categories
+        ]
+
+    privacy_score, grade = compute_privacy_score(categories)
 
     return AnalysisResult(
         company=data["company"],
