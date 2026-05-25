@@ -352,6 +352,7 @@ async function runPdfAnalysis(file) {
 
     const data = await res.json();
     renderResults(data, true);
+    loadPopular();
   } catch {
     showError("Upload failed. Please try again.");
   }
