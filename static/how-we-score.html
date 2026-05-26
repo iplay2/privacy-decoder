@@ -197,6 +197,20 @@
       margin-top: .05rem;
     }
 
+    /* Return button */
+    .return-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .95rem;
+      padding: .75rem 2rem;
+      border-radius: var(--radius);
+      transition: background .15s;
+    }
+    .return-btn:hover { background: var(--accent-hover); }
+
     @media (max-width: 560px) {
       .method-hero h1 { font-size: 1.5rem; }
       .formula-box { font-size: .75rem; }
@@ -213,6 +227,7 @@
   <main class="method-body">
 
     <a href="/privacydecoder/" class="back-link">← Back to Privacy Defender</a>
+
 
     <!-- ── Step 1 ── -->
     <section class="method-section">
@@ -391,6 +406,11 @@
         <li><strong>We do not track you.</strong> We do not store anything about your session, your IP address, or your identity. The only data we retain is the analysis of the policies themselves.</li>
       </ul>
     </section>
+
+    <!-- ── Return button ── -->
+    <div style="text-align:center;margin-top:1rem;">
+      <a href="/privacydecoder/" class="return-btn">← Return to Privacy Defender</a>
+    </div>
 
   </main>
 
