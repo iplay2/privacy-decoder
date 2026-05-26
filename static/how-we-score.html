@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Score — Your Privacy Defender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/privacydecoder/static/style.css" />
+  <style>
+    /* ── Methodology page layout ─────────────────────────────────────── */
+    .method-hero {
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      text-align: center;
+      padding: 2rem 1rem 1.75rem;
+    }
+    .method-hero h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.5px; }
+    .method-hero p  { margin-top: .5rem; color: var(--nav-text-muted); font-size: .95rem; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      color: var(--nav-text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--nav-text); }
+
+    .method-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* Section blocks */
+    .method-section {
+      margin-bottom: 2.5rem;
+    }
+    .method-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: .5rem;
+      margin-bottom: 1rem;
+    }
+    .method-section h3 {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin: 1.25rem 0 .5rem;
+    }
+    .method-section p {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: .75rem;
+    }
+    .method-section p:last-child { margin-bottom: 0; }
+
+    /* Step number pill */
+    .step-label {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      margin-bottom: .6rem;
+    }
+
+    /* Callout box */
+    .callout {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: .85rem 1rem;
+      margin: 1rem 0;
+      font-size: .875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .callout strong { color: var(--text-primary); }
+
+    .callout-warning {
+      background: #FEF6E5;
+      border-left-color: var(--grade-c);
+    }
+
+    /* Formula box */
+    .formula-box {
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      line-height: 1.8;
+      margin: 1rem 0;
+    }
+    .formula-box .formula-comment { color: var(--nav-text-muted); }
+
+    /* Tables */
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .855rem;
+      margin: .75rem 0 1rem;
+    }
+    .method-table th {
+      text-align: left;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text-muted);
+      padding: .4rem .75rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .method-table td {
+      padding: .5rem .75rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .method-table tr:last-child td { border-bottom: none; }
+    .method-table td:first-child { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+    /* Grade pills inline */
+    .g { display: inline-flex; align-items: center; justify-content: center;
+         width: 28px; height: 28px; border-radius: 6px; font-size: .85rem;
+         font-weight: 900; color: #fff; flex-shrink: 0; vertical-align: middle; }
+    .g-a { background: var(--grade-a); }
+    .g-b { background: var(--grade-b); }
+    .g-c { background: var(--grade-c); }
+    .g-d { background: var(--grade-d); }
+    .g-f { background: var(--grade-f); }
+
+    /* Risk dot inline */
+    .rdot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+            vertical-align: middle; margin-right: .3rem; }
+    .rdot-low  { background: var(--low); }
+    .rdot-med  { background: var(--med); }
+    .rdot-high { background: var(--high); }
+
+    /* Rating badges reused from main */
+    .five-scale {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin: .5rem 0 1rem;
+    }
+    .fs-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .35rem .65rem;
+      font-size: .8rem;
+    }
+    .fs-item .dc-badge { font-size: .72rem; }
+
+    /* Limitation block */
+    .limitation-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .limitation-list li {
+      display: flex;
+      gap: .75rem;
+      font-size: .875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .limitation-list li::before {
+      content: "→";
+      color: var(--text-muted);
+      flex-shrink: 0;
+      font-weight: 700;
+      margin-top: .05rem;
+    }
+
+    @media (max-width: 560px) {
+      .method-hero h1 { font-size: 1.5rem; }
+      .formula-box { font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="method-hero">
+    <h1>How We Analyze &amp; Score Privacy Policies</h1>
+    <p>Full transparency on our methodology — what we do, how we do it, and why</p>
+  </header>
+
+  <main class="method-body">
+
+    <a href="/privacydecoder/" class="back-link">← Back to Privacy Defender</a>
+
+    <!-- ── Step 1 ── -->
+    <section class="method-section">
+      <span class="step-label">Step 1</span>
+      <h2>Reading the Document</h2>
+      <p>You can submit a privacy policy or EULA two ways:</p>
+      <p><strong>Paste a URL.</strong> We fetch the page directly from the company's website and extract the full text of the policy. We read the actual source — not a cached or summarized version.</p>
+      <p><strong>Upload a PDF.</strong> If a policy is behind a login or only available as a document, you can save it as a PDF from your browser and upload it. We extract all text from the PDF before analysis begins.</p>
+      <p>Once we have the text, the entire document is passed to an AI model (Anthropic's Claude) which reads it the way a privacy attorney would — looking for what the company <em>can</em> do, not just what they say they won't do.</p>
+
+      <div class="callout">
+        <strong>How the AI is instructed:</strong> The AI is told to assume the worst-case interpretation of any vague or ambiguous language, because companies write policies to maximize their own options, not to protect you. If a category is not addressed in the policy at all, it is automatically rated <strong>High risk</strong> — silence favors the company, never you.
+      </div>
+    </section>
+
+    <!-- ── Step 2 ── -->
+    <section class="method-section">
+      <span class="step-label">Step 2</span>
+      <h2>The 12-Category Analysis</h2>
+      <p>Every policy is evaluated across 12 privacy risk categories. For each one, the AI assigns a risk level and writes a plain-English explanation written entirely from your perspective — what the company can do <em>to you</em> and <em>with your data</em>.</p>
+
+      <table class="method-table">
+        <thead><tr><th>Category</th><th>What it measures</th></tr></thead>
+        <tbody>
+          <tr><td>Data Selling</td><td>Can the company sell your personal data to other companies?</td></tr>
+          <tr><td>Third-Party Sharing</td><td>Who else receives your data, and under what conditions?</td></tr>
+          <tr><td>Right to Delete</td><td>Can you actually get your data deleted, and will they comply?</td></tr>
+          <tr><td>Sensitive Data</td><td>Do they collect biometrics, health, or financial information?</td></tr>
+          <tr><td>User Profiling</td><td>Are they building a behavioral dossier on you?</td></tr>
+          <tr><td>Third-Party Profile Access</td><td>Can other companies buy or access your profile?</td></tr>
+          <tr><td>Government &amp; Legal Disclosure</td><td>Under what conditions do they hand your data to governments or law enforcement?</td></tr>
+          <tr><td>Data Collection</td><td>What types of data do they collect, and what do they do with it? <em>(scored separately — see Step 3)</em></td></tr>
+          <tr><td>Data Retention</td><td>How long do they keep your data after you stop using the service?</td></tr>
+          <tr><td>Targeted Advertising</td><td>Is your data being used to target you with ads?</td></tr>
+          <tr><td>Children's Data</td><td>Are children's data handled with appropriate extra protections?</td></tr>
+          <tr><td>Policy Change Rights</td><td>Can the company change the rules on you without meaningful notice?</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Risk Levels</h3>
+      <table class="method-table">
+        <thead><tr><th>Level</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rdot rdot-low"></span> Low</td><td>You have real, enforceable protections. The policy is specific and limits what the company can do.</td></tr>
+          <tr><td><span class="rdot rdot-med"></span> Medium</td><td>The language is vague or conditional. The company has significant wiggle room.</td></tr>
+          <tr><td><span class="rdot rdot-high"></span> High</td><td>The company can do a lot with your data, and you have given up significant rights.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Step 3 ── -->
+    <section class="method-section">
+      <span class="step-label">Step 3</span>
+      <h2>The Data Collection Deep Dive — 39 Questions</h2>
+      <p>Data Collection receives special treatment because it is the foundation of every other privacy risk. A company cannot sell, share, or misuse data it has not collected. But data collected <em>only for your benefit and kept entirely within the company</em> is far less dangerous than the same data handed to third parties.</p>
+      <p>To capture this distinction, every analysis includes a second, separate AI examination: <strong>39 specific questions</strong> across 9 data types, each answered directly from the policy text. This replaces a single broad AI judgment with a structured, point-scored evaluation.</p>
+
+      <h3>The 9 Data Types Examined</h3>
+      <table class="method-table">
+        <thead><tr><th>Data Type</th><th>Sensitivity</th><th>Example questions</th></tr></thead>
+        <tbody>
+          <tr><td>🧠 Behavior</td><td>Highest</td><td>Can they infer your political or religious beliefs? Predict your future actions?</td></tr>
+          <tr><td>🏥 Health</td><td>Highest</td><td>Can they collect biometric data? Infer health conditions from your behavior?</td></tr>
+          <tr><td>💳 Financial</td><td>Very High</td><td>Can they see your purchase history? Infer your income or financial situation?</td></tr>
+          <tr><td>👥 Social Graph</td><td>High</td><td>Can they profile your friends who don't have an account? Map who you talk to?</td></tr>
+          <tr><td>📍 Location</td><td>High</td><td>Can they track your movement history? Infer where you live or work?</td></tr>
+          <tr><td>🎙️ Audio</td><td>Moderate–High</td><td>Can they listen through your microphone? Create a voiceprint of you?</td></tr>
+          <tr><td>🎥 Video</td><td>Moderate</td><td>Can they access your camera in real time? Analyze video content?</td></tr>
+          <tr><td>📷 Photos</td><td>Standard</td><td>Can they identify people in your photos? Use your photos to train AI?</td></tr>
+          <tr><td>📱 Device</td><td>Lower</td><td>Can they see what apps you have installed? Access your clipboard?</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The Five-Point Rating Scale</h3>
+      <p>Each question is answered twice — once for what the company can do, and once for whether they can share that data or capability with third parties.</p>
+      <div class="five-scale">
+        <div class="fs-item"><span class="dc-badge dc-yes">Yes</span> Policy explicitly permits this</div>
+        <div class="fs-item"><span class="dc-badge dc-likely">Likely</span> Vague language that almost certainly permits this</div>
+        <div class="fs-item"><span class="dc-badge dc-unknown">Unknown</span> Policy is silent — treated as a significant red flag</div>
+        <div class="fs-item"><span class="dc-badge dc-unlikely">Unlikely</span> Implied not done, but not explicitly forbidden</div>
+        <div class="fs-item"><span class="dc-badge dc-no">No</span> Policy explicitly prohibits this</div>
+      </div>
+    </section>
+
+    <!-- ── Step 4 ── -->
+    <section class="method-section">
+      <span class="step-label">Step 4</span>
+      <h2>The Third-Party Sharing Multiplier</h2>
+      <p>This is the most important design decision in our scoring model.</p>
+      <p><strong>Data held by the company that collected it</strong> is governed by the terms and conditions you agreed to. You know who has it. You can read their policy. You may have some legal recourse.</p>
+      <p><strong>Data shared with third parties is a fundamentally different threat.</strong> Once your data leaves the collecting company:</p>
+      <ul style="font-size:.875rem;color:var(--text-secondary);line-height:1.8;padding-left:1.25rem;margin-bottom:.75rem;">
+        <li>You never see the contracts between that company and its data partners</li>
+        <li>Those third parties have their own sharing arrangements you are not party to</li>
+        <li>Your data can propagate through an unlimited chain of companies you have never heard of</li>
+        <li>You have no visibility, no recourse, and no ability to trace where it ends up</li>
+      </ul>
+      <p>For this reason, <strong>third-party sharing is weighted four times heavier than collection alone</strong> in our Data Collection scoring formula:</p>
+
+      <div class="formula-box">
+        <span class="formula-comment"># Per-question score (max 5.0 when both are "Yes")</span><br>
+        score = (collection_risk × 1)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (collection_risk × sharing_risk × 4)<br><br>
+        <span class="formula-comment"># The sharing component is conditional on collection —</span><br>
+        <span class="formula-comment"># a company cannot share data it does not have.</span>
+      </div>
+
+      <table class="method-table">
+        <thead><tr><th>Can collect?</th><th>Shares with 3rd parties?</th><th>Score</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>Yes</td><td>Yes</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--high)">5.0</td><td>Collected and fully in the wild — maximum risk</td></tr>
+          <tr><td>Yes</td><td>Likely</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--high)">4.0</td><td>Collected and probably shared</td></tr>
+          <tr><td>Yes</td><td>Unknown</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--med)">3.0</td><td>Collected; sharing unaddressed — silence is a red flag</td></tr>
+          <tr><td>Yes</td><td>No</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--low)">1.0</td><td>Collected but contained — data stays with the company</td></tr>
+          <tr><td>Likely</td><td>Yes</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--high)">3.75</td><td>Probably collected, definitely shared</td></tr>
+          <tr><td>No</td><td>Yes</td><td style="font-family:var(--font-mono);font-weight:700;color:var(--low)">0.0</td><td>Cannot share what they don't collect</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        The ratio between <strong>Yes/No</strong> (collected, kept in-house) and <strong>Yes/Yes</strong> (collected and shared) is <strong>5 to 1</strong>. This directly reflects the real-world difference between data you have some protection over and data that has permanently left your control.
+      </div>
+    </section>
+
+    <!-- ── Step 5 ── -->
+    <section class="method-section">
+      <span class="step-label">Step 5</span>
+      <h2>The Final Score and Grade</h2>
+      <p>Each of the 12 categories is assigned a weight reflecting how much that risk matters to you as a user. Higher weight = more impact on the final score.</p>
+
+      <table class="method-table">
+        <thead><tr><th>Weight</th><th>Category</th></tr></thead>
+        <tbody>
+          <tr><td>12</td><td>Data Selling — the worst violation: your data as a product</td></tr>
+          <tr><td>11</td><td>Third-Party Sharing — who else gets your data</td></tr>
+          <tr><td>10</td><td>Right to Delete — your most basic protection</td></tr>
+          <tr><td>10</td><td>Sensitive Data — biometrics, health, financial</td></tr>
+          <tr><td>9</td><td>User Profiling — building a dossier on you</td></tr>
+          <tr><td>9</td><td>Third-Party Profile Access — others buying your profile</td></tr>
+          <tr><td>9</td><td>Government &amp; Legal Disclosure — state access to your life</td></tr>
+          <tr><td>8</td><td>Data Collection — scored from the 39-question matrix</td></tr>
+          <tr><td>8</td><td>Data Retention — how long they keep it</td></tr>
+          <tr><td>7</td><td>Targeted Advertising — monetization of your attention</td></tr>
+          <tr><td>7</td><td>Children's Data — elevated concern if applicable</td></tr>
+          <tr><td>6</td><td>Policy Change Rights — can they change the rules on you</td></tr>
+        </tbody>
+      </table>
+
+      <p>The 12 weighted scores are summed, normalized to a <strong>0–100 scale</strong> (where 0 is the safest possible policy and 100 is the most harmful), and converted to a letter grade.</p>
+
+      <table class="method-table">
+        <thead><tr><th>Score</th><th>Grade</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>0–20</td><td><span class="g g-a">A</span></td><td>Strong privacy protections. Limited collection, no selling, real user rights.</td></tr>
+          <tr><td>21–40</td><td><span class="g g-b">B</span></td><td>Above average. Some data use but meaningful limits in place.</td></tr>
+          <tr><td>41–60</td><td><span class="g g-c">C</span></td><td>Average. Significant data collection or vague language around sharing.</td></tr>
+          <tr><td>61–75</td><td><span class="g g-d">D</span></td><td>Poor. Broad data use with limited user protections.</td></tr>
+          <tr><td>76–100</td><td><span class="g g-f">F</span></td><td>Failing. Extensive collection, selling, or third-party sharing with minimal safeguards.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Limitations ── -->
+    <section class="method-section">
+      <h2>Transparency &amp; Limitations</h2>
+
+      <div class="callout callout-warning">
+        All analysis and ratings on this site are <strong>opinions generated by artificial intelligence</strong> and are intended for informational purposes only. They do not constitute legal advice and should not be relied upon as statements of fact. Always consult a qualified attorney for legal guidance.
+      </div>
+
+      <ul class="limitation-list">
+        <li><strong>We analyze what the policy says, not what the company does.</strong> A company can write a restrictive policy and still violate it — or write a permissive policy and behave responsibly. We score the document, not the company's actual behavior.</li>
+        <li><strong>Policies change.</strong> We record the date of each analysis and flag when a policy has been updated since it was last analyzed. Always check the document date against the company's current published policy.</li>
+        <li><strong>The AI can be wrong.</strong> We instruct the AI to be conservative and assume the worst-case reading of ambiguous language. In rare cases it may misread a clause. Every category analysis includes a verbatim quote from the document so you can verify the original language yourself.</li>
+        <li><strong>Silence is scored as risk.</strong> If a category is not addressed in the policy, we rate it High. This is intentional — a company that doesn't address your right to delete your data has not protected it.</li>
+        <li><strong>We do not track you.</strong> We do not store anything about your session, your IP address, or your identity. The only data we retain is the analysis of the policies themselves.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Your Privacy Defender analyzes policies in plain English. We do not track you or store anything about your session.</p>
+    <p class="footer-disclaimer">All analysis and ratings provided by this site are opinions generated by artificial intelligence and are intended for informational purposes only. They do not constitute legal advice, and should not be relied upon as statements of fact. Always consult a qualified attorney for legal guidance.</p>
+  </footer>
+
+</body>
+</html>
