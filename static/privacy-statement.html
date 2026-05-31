@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Statement — Your Privacy Defender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/privacydecoder/static/style.css" />
+  <style>
+    .ps-hero {
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      text-align: center;
+      padding: 2rem 1rem 1.75rem;
+    }
+    .ps-hero h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.5px; }
+    .ps-hero p  { margin-top: .5rem; color: var(--nav-text-muted); font-size: .9rem; }
+
+    .ps-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    .effective-date {
+      font-size: .8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ps-section {
+      margin-bottom: 2.25rem;
+    }
+    .ps-section h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: .45rem;
+      margin-bottom: .9rem;
+    }
+    .ps-section p {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: .7rem;
+    }
+    .ps-section p:last-child { margin-bottom: 0; }
+    .ps-section ul {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      padding-left: 1.25rem;
+      margin-bottom: .7rem;
+    }
+    .ps-section ul li { margin-bottom: .3rem; }
+
+    /* Yes / No summary boxes */
+    .collect-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin: 1rem 0;
+    }
+    .collect-box {
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      font-size: .85rem;
+      line-height: 1.65;
+    }
+    .collect-box h3 {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: .5rem;
+    }
+    .collect-box ul {
+      padding-left: 1rem;
+      margin: 0;
+      font-size: .85rem;
+    }
+    .collect-yes { background: #FCECEA; color: #6B2020; }
+    .collect-yes h3 { color: #C0392B; }
+    .collect-no  { background: #E8F5EC; color: #1A4A28; }
+    .collect-no  h3 { color: #1E7C40; }
+
+    /* Third-party cards */
+    .third-party-list {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      margin: .75rem 0;
+    }
+    .tp-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: .85rem 1rem;
+      font-size: .875rem;
+    }
+    .tp-card strong {
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: .2rem;
+    }
+    .tp-card span {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .tp-card a { color: var(--accent); }
+
+    /* Callout */
+    .callout {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: .85rem 1rem;
+      margin: 1rem 0;
+      font-size: .875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .callout strong { color: var(--text-primary); }
+
+    /* Return button */
+    .return-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .95rem;
+      padding: .75rem 2rem;
+      border-radius: var(--radius);
+      transition: background .15s;
+    }
+    .return-btn:hover { background: var(--accent-hover); }
+
+    @media (max-width: 560px) {
+      .collect-grid { grid-template-columns: 1fr; }
+      .ps-hero h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="ps-hero">
+    <h1>Privacy Statement</h1>
+    <p>What Your Privacy Defender collects about you — and what it does not</p>
+  </header>
+
+  <main class="ps-body">
+
+    <a href="/privacydecoder/" class="back-link">← Back to Privacy Defender</a>
+
+    <p class="effective-date">Effective date: June 1, 2025 &nbsp;·&nbsp; iplay2.tv/privacydecoder</p>
+
+    <!-- ── Summary ── -->
+    <section class="ps-section">
+      <h2>The Short Version</h2>
+      <p>Your Privacy Defender is a tool that reads privacy policies — it does not write one of its own by tracking you. We do not know who you are, where you come from, or what device you are using. We collect no personal information about the people who use this site.</p>
+      <p>What we <em>do</em> store is the content and results of privacy policy analyses, so that repeated lookups of the same policy are faster and we can show which policies have been analyzed most often. That data is about the policies, not about you.</p>
+
+      <div class="collect-grid">
+        <div class="collect-box collect-yes">
+          <h3>What we store</h3>
+          <ul>
+            <li>Text of analyzed policies</li>
+            <li>Analysis results &amp; scores</li>
+            <li>How many times each URL was requested</li>
+            <li>Date &amp; version of each analysis</li>
+          </ul>
+        </div>
+        <div class="collect-box collect-no">
+          <h3>What we do not store</h3>
+          <ul>
+            <li>Your IP address</li>
+            <li>Your name or identity</li>
+            <li>Cookies or session data</li>
+            <li>Browser or device fingerprints</li>
+            <li>Any account information</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What we collect ── -->
+    <section class="ps-section">
+      <h2>What We Collect and Why</h2>
+
+      <p><strong>Policy text and analysis results.</strong> When you submit a URL or upload a PDF, we extract the full text of the document and send it to the Claude AI API for analysis. The resulting scores, risk ratings, summaries, and the 39-question data collection matrix are stored in our database. This allows us to return cached results instantly if the same policy is requested again, and to detect when a policy has changed since it was last analyzed.</p>
+
+      <p><strong>Request counts per URL.</strong> We count how many times each policy URL has been analyzed. This aggregate number — not tied to any individual user — powers the "Most Analyzed Policies" grid on the home page. It tells us which companies people are most curious about, nothing more.</p>
+
+      <p><strong>PDF uploads.</strong> If you upload a PDF, the file is processed in memory to extract its text, which is then analyzed. The original PDF file is not saved to disk and is not retained after the analysis completes. Only the extracted text and analysis results are stored.</p>
+
+      <p><strong>Server logs.</strong> Our web server (Nginx on Amazon EC2) maintains standard access logs that may include IP addresses, request timestamps, and HTTP status codes. These are infrastructure-level logs used solely for diagnosing errors and monitoring server health. They are not analyzed for user behavior, not shared with third parties, and are rotated and deleted on a regular schedule.</p>
+    </section>
+
+    <!-- ── What we don't collect ── -->
+    <section class="ps-section">
+      <h2>What We Do Not Collect</h2>
+      <ul>
+        <li><strong>No tracking cookies.</strong> We set no cookies of any kind — advertising, analytics, or functional.</li>
+        <li><strong>No analytics scripts.</strong> We do not run Google Analytics, Meta Pixel, or any third-party analytics or tracking code.</li>
+        <li><strong>No account system.</strong> There is no login, no registration, and no user profile. We have no way to identify you across visits.</li>
+        <li><strong>No behavioral tracking.</strong> We do not record what you click, how long you stay on the page, or what results you read.</li>
+        <li><strong>No advertising.</strong> We do not run ads, and we do not share any data with advertising networks.</li>
+        <li><strong>No fingerprinting.</strong> We make no attempt to identify your browser, device, operating system, or screen size for tracking purposes.</li>
+      </ul>
+    </section>
+
+    <!-- ── Third parties ── -->
+    <section class="ps-section">
+      <h2>Third-Party Services</h2>
+      <p>Running this site requires a small number of third-party services. We are transparent about each one.</p>
+
+      <div class="third-party-list">
+
+        <div class="tp-card">
+          <strong>Anthropic (Claude AI API)</strong>
+          <span>When you submit a policy for analysis, the full text of that document is sent to Anthropic's API to be read and scored by Claude. Anthropic's use of this data is governed by their <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and API usage terms. We do not send any information about you — only the text of the policy you submitted.</span>
+        </div>
+
+        <div class="tp-card">
+          <strong>Amazon Web Services (EC2)</strong>
+          <span>This application runs on an Amazon EC2 server. AWS has access to server-level infrastructure data as a hosting provider. AWS's use of data is governed by the <a href="https://aws.amazon.com/privacy/" target="_blank" rel="noopener noreferrer">AWS Privacy Notice</a>.</span>
+        </div>
+
+        <div class="tp-card">
+          <strong>Google Fonts</strong>
+          <span>This site loads DM Sans and DM Mono typefaces directly from Google Fonts. When your browser requests these font files, Google may log standard HTTP request data including your IP address. This is a standard web font delivery mechanism. Google's use of this data is governed by the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. No font data is linked to your activity on this site.</span>
+        </div>
+
+        <div class="tp-card">
+          <strong>Let's Encrypt</strong>
+          <span>SSL certificates for this site are issued by Let's Encrypt, a non-profit certificate authority. Certificate issuance and renewal involves no personal user data.</span>
+        </div>
+
+      </div>
+
+      <div class="callout">
+        <strong>Note on policy text you submit:</strong> If you paste a URL to a policy page, we fetch that page from the public web. If you upload a PDF, that file is processed locally on our server. In both cases, the extracted text is transmitted to the Anthropic Claude API. Do not submit any document that contains personal information you would not want transmitted to a third-party AI service.
+      </div>
+    </section>
+
+    <!-- ── Data retention ── -->
+    <section class="ps-section">
+      <h2>Data Retention</h2>
+      <p>Analyzed policy results are stored indefinitely so that repeated requests for the same policy can be served from cache rather than re-analyzing the document. When a policy is re-analyzed (because its content has changed), the previous version is archived in our database for comparison purposes.</p>
+      <p>Server access logs are retained for a short operational period and then deleted. We do not archive or analyze historical server logs for any purpose beyond diagnosing technical issues.</p>
+      <p>We do not sell, license, or otherwise transfer stored analysis data to any third party.</p>
+    </section>
+
+    <!-- ── Your rights ── -->
+    <section class="ps-section">
+      <h2>Your Rights</h2>
+      <p>Because we collect no personal information about you, there is no personal profile to access, correct, or delete. You cannot be identified in our database.</p>
+      <p>If you have submitted a policy for analysis and would like the stored results removed from our database, you may contact us. Since we have no way to verify who submitted any particular analysis, removal requests will be evaluated on a case-by-case basis.</p>
+      <p>If you are a company whose privacy policy has been analyzed and scored on this site and you have questions or concerns, please contact us.</p>
+    </section>
+
+    <!-- ── AI disclaimer ── -->
+    <section class="ps-section">
+      <h2>AI-Generated Content Disclaimer</h2>
+      <p>All analysis, scores, risk ratings, and summaries displayed on this site are generated by artificial intelligence (Anthropic's Claude) and represent opinions, not legal determinations. They are provided for informational purposes only and do not constitute legal advice. Results should not be relied upon as statements of fact.</p>
+      <p>AI models can make mistakes. We instruct Claude to be conservative and to flag ambiguous language, but no automated system can replace a qualified legal professional's review of a legal document. Always consult an attorney for legal guidance.</p>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section class="ps-section">
+      <h2>Contact</h2>
+      <p>Questions about this privacy statement or the data practices of this site can be directed to the site operator via <a href="https://iplay2.tv" style="color:var(--accent);">iplay2.tv</a>. This privacy statement may be updated from time to time. The effective date at the top of this page reflects the date of the most recent revision.</p>
+    </section>
+
+    <div style="text-align:center;margin-top:1rem;">
+      <a href="/privacydecoder/" class="return-btn">← Return to Privacy Defender</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Your Privacy Defender analyzes policies in plain English. We do not track you or store anything about your session.</p>
+    <p class="footer-disclaimer">All analysis and ratings provided by this site are opinions generated by artificial intelligence and are intended for informational purposes only. They do not constitute legal advice, and should not be relied upon as statements of fact. Always consult a qualified attorney for legal guidance.</p>
+  </footer>
+
+</body>
+</html>
